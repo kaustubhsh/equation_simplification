@@ -66,7 +66,7 @@ def preToInfix(expression):
 def sol(rhs,exp):
     s = []
     exp = list(re.sub('x|[()]|\s', ' ', exp).split(' '))
-    exp = [i for i in exp if i]
+    exp = [i for i in exp if i]             # removing empty values (whitespcaes)
 
     count  = 0
     length = len(exp)
@@ -103,21 +103,30 @@ def rec(obj):
     return a
 
 
-with open('test.json') as f:
-  data = json.load(f)
 
-# print(json.dumps(data, indent = 4, sort_keys=True))
-test = rec(data)
 
-# print(test)
-expression = preToInfix(test)
-# print(expression)
 
-lhs = expression.split('=')[0]
-# print(lhs)
-rhs = expression.split('=')[1].strip()
-# print(rhs)
-value=sol(rhs,lhs)
+if __name__ == "__main__":
+    print("Hello!! I created a simple linear equation simplifier. Have a LooK!!")
+    print('Enter the json file name (without extension)')
+    filename = input()
+    with open(filename+'.json') as f:
+        data = json.load(f)
 
-print('x = ',value)
-print('x = ',eval(value))
+
+    # print(json.dumps(data, indent = 4, sort_keys=True))
+    test = rec(data)
+
+    expression = preToInfix(test)
+    print("The prettified JSON : ")
+    print(expression)
+
+    lhs = expression.split('=')[0]      # Calculate the lhs of the expression
+    # print(lhs)
+    rhs = expression.split('=')[1].strip()      # Calculate the rhs of the expression
+    # print(rhs)
+    value=sol(rhs,lhs)
+    print('The transformed expression is : ')
+    print('x = ',value)
+    print('The value of x is :')
+    print('x = ',eval(value))
